@@ -8,7 +8,7 @@
  * running services with no restart and no deploy.
  */
 import { createHash } from 'node:crypto';
-import { readFileSync, watch } from 'node:fs';
+import { readFileSync, watchFile } from 'node:fs';
 import { ErrorCode } from '@openfeature/server-sdk';
 import type { EvaluationContext, JsonValue, Provider, ResolutionDetails } from '@openfeature/server-sdk';
 
@@ -68,13 +68,39 @@ export function evaluate(
   return { variant: flag.default, reason: 'default' };
 }
 
+function problemsWith(key: string, { variants, default: fallback, rules = [] }: FlagDefinition): Array<string> {
+  const rollouts = rules.map((rule) => rule.rollout ?? {});
+  const named = [fallback, ...rules.map((rule) => rule.variant ?? fallback), ...rollouts.flatMap((r) => Object.keys(r))];
+  const percents = rollouts.map((r) => Object.values(r));
+
+  return [
+    ...[...new Set(named)].flatMap((v) => (Object.hasOwn(variants, v) ? [] : [`${key}: no variant "${v}"`])),
+    ...(percents.flat().every((p) => Number.isFinite(p) && p >= 0 && p <= 100) ? [] : [`${key}: a rollout percentage must be 0-100`]),
+    ...(percents.some((p) => p.reduce((sum, n) => sum + n, 0) > 100) ? [`${key}: a rollout adds up to more than 100`] : []),
+  ];
+}
+
+/** Accepts a file whose rules all name variants that exist. Throws otherwise. */
+export function parseFlags(text: string): FlagFile {
+  const file = JSON.parse(text) as FlagFile;
+  const problems = Object.entries(file.flags).flatMap(([key, flag]) => problemsWith(key, flag));
+
+  if (!Number.isInteger(file.version) || file.version < 1) { problems.push('version must be a whole number from 1'); }
+
+  if (problems.length > 0) { throw new Error(problems.join('; ')); }
+
+  return file;
+}
+
 export function fileProvider(path: string): Provider {
-  let file = JSON.parse(readFileSync(path, 'utf8')) as FlagFile;
-  watch(path, () => {
+  let file = parseFlags(readFileSync(path, 'utf8'));
+  // Polls the path, so edits that replace the file count too.
+  watchFile(path, { interval: 250 }, () => {
     try {
-      file = JSON.parse(readFileSync(path, 'utf8')) as FlagFile;
-    } catch {
-      // Caught mid-write: keep the last good flags, the next event brings the rest.
+      file = parseFlags(readFileSync(path, 'utf8'));
+    } catch (error) {
+      // A bad edit, or caught mid-write: the last good flags stay live.
+      console.error(`${path} not reloaded, still on version ${file.version}: ${String(error)}`);
     }
   }).unref();
 
@@ -84,9 +110,12 @@ export function fileProvider(path: string): Provider {
     if (!flag) { return { value: fallback, reason: 'ERROR', errorCode: ErrorCode.FLAG_NOT_FOUND }; }
 
     const { variant, reason } = evaluate(key, flag, context);
+    const value = flag.variants[variant];
+
+    if (typeof value !== typeof fallback) { return { value: fallback, reason: 'ERROR', errorCode: ErrorCode.TYPE_MISMATCH }; }
 
     return {
-      value: flag.variants[variant] as T,
+      value: value as T,
       variant,
       reason,
       // OpenFeature names these for OpenTelemetry's feature_flag.set.id and feature_flag.version.

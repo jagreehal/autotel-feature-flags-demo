@@ -17,8 +17,11 @@
     "anti-slop/no-known-value-widening": {
       "count": 5
     },
+    "anti-slop/no-runtime-typeof": {
+      "count": 2
+    },
     "anti-slop/require-safety-comment-for-type-assertion": {
-      "count": 3
+      "count": 2
     },
     "complexity": {
       "count": 1
@@ -30,36 +33,13 @@
       "count": 1
     },
     "typescript/no-unsafe-type-assertion": {
-      "count": 3
-    },
-    "typescript/require-await": {
-      "count": 4
-    },
-    "typescript/strict-boolean-expressions": {
-      "count": 3
-    }
-  },
-  "src/flag-baggage.ts": {
-    "anti-slop/require-safety-comment-for-type-assertion": {
-      "count": 2
-    },
-    "typescript/explicit-module-boundary-types": {
-      "count": 1
-    },
-    "typescript/no-unnecessary-condition": {
-      "count": 1
-    },
-    "typescript/no-unsafe-type-assertion": {
       "count": 2
     },
     "typescript/require-await": {
       "count": 4
     },
     "typescript/strict-boolean-expressions": {
-      "count": 1
-    },
-    "unicorn/consistent-function-scoping": {
-      "count": 1
+      "count": 3
     }
   },
   "src/posthog-provider.test.ts": {
@@ -72,16 +52,16 @@
       "count": 1
     },
     "anti-slop/require-safety-comment-for-type-assertion": {
-      "count": 1
+      "count": 2
     },
     "typescript/no-base-to-string": {
-      "count": 1
+      "count": 2
     },
     "typescript/no-deprecated": {
       "count": 1
     },
     "typescript/no-unsafe-type-assertion": {
-      "count": 1
+      "count": 2
     },
     "typescript/strict-boolean-expressions": {
       "count": 1
@@ -109,21 +89,20 @@
       "count": 1
     }
   },
+  "src/repro.test.ts": {
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 1
+    }
+  },
   "src/repro.ts": {
     "anti-slop/require-safety-comment-for-type-assertion": {
       "count": 6
     },
-    "no-empty": {
-      "count": 1
-    },
-    "typescript/consistent-return": {
-      "count": 1
-    },
     "typescript/no-unsafe-type-assertion": {
       "count": 6
-    },
-    "typescript/strict-boolean-expressions": {
-      "count": 2
     }
   },
   "src/rollout.ts": {

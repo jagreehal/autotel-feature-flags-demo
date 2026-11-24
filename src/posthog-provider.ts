@@ -11,13 +11,22 @@ import type { EvaluationContext, JsonValue, Provider, ResolutionDetails } from '
 import { Keyv } from 'keyv';
 import { PostHog } from 'posthog-node';
 
-/** How long a rollout or kill switch can take to reach a user already cached. */
+/** The staleness this cache can add, on top of PostHog's own delay, before a user already cached sees a change. */
 export const FLAG_TTL_MS = 30_000;
 
 export function posthogClient(): PostHog | undefined {
   const key = process.env.POSTHOG_KEY;
 
   return key ? new PostHog(key, { host: process.env.POSTHOG_HOST }) : undefined;
+}
+
+/** Boolean flags answer true or false. Multivariate flags answer a variant name, or false when the user matches no condition. */
+function read<T extends JsonValue>(answer: string | boolean, fallback: T): ResolutionDetails<T> {
+  if (typeof fallback === 'boolean') { return { value: (answer !== false) as T, variant: String(answer), reason: 'targeting_match' }; }
+
+  if (answer === false) { return { value: fallback, variant: String(fallback), reason: 'default' }; }
+
+  return { value: answer as T, variant: String(answer), reason: 'targeting_match' };
 }
 
 export function posthogProvider(posthog: Pick<PostHog, 'getFeatureFlag'>): Provider {
@@ -39,12 +48,11 @@ export function posthogProvider(posthog: Pick<PostHog, 'getFeatureFlag'>): Provi
     // No answer (PostHog down, or no such flag) is not cached, so the next request asks again.
     if (answer === undefined) { return { value: fallback, reason: 'ERROR', errorCode: ErrorCode.FLAG_NOT_FOUND }; }
 
-    // Multivariate flags answer with the variant name, boolean flags with true/false.
-    const value = (typeof fallback === 'boolean' ? answer !== false : answer) as T;
-
     if (cached === undefined) { await cache.set(cacheKey, answer); }
 
-    return { value, variant: String(answer), reason: cached === undefined ? 'targeting_match' : 'cached' };
+    const details = read(answer, fallback);
+
+    return cached === undefined ? details : { ...details, reason: 'cached' };
   };
 
   return {

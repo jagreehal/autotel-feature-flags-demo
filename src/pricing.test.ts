@@ -17,6 +17,7 @@ describe('pricing engines', () => {
     }
   });
 
+  // Documents the planted bug: delete it when you fix v2.
   it('v2 takes an EUR discount off twice, and the guard refuses the quote', () => {
     expect(() => quote(basket('EUR', 'SAVE10'), 'v2')).toThrow(/total 3510 != subtotal 5850 - discount 1170/);
   });

@@ -7,16 +7,17 @@ import { createServer } from 'node:http';
 import { OpenFeature } from '@openfeature/server-sdk';
 import { context, propagation, trace } from 'autotel';
 import type { TraceContext } from 'autotel';
+import { featureFlagBaggage } from 'autotel/feature-flags';
 import { startTelemetry } from './telemetry.ts';
 import { fileProvider } from './file-provider.ts';
 import { posthogClient, posthogProvider } from './posthog-provider.ts';
-import { withFlagBaggage } from './flag-baggage.ts';
 import { lookupUser } from './users.ts';
 import type { Quote, QuoteRequest } from './pricing.ts';
 
 startTelemetry('checkout-api');
 
 const PRICING_URL = process.env.PRICING_URL ?? 'http://127.0.0.1:4101/quote';
+const PRICING_TIMEOUT_MS = 5000;
 const posthog = posthogClient();
 
 await OpenFeature.setProviderAndWait(posthog ? posthogProvider(posthog) : fileProvider('flags.json'));
@@ -45,10 +46,10 @@ async function checkout(ctx: TraceContext, userId: string, request: QuoteRequest
   const engine = await flags.getStringDetails('pricing-engine', 'control', who);
   const express = await flags.getBooleanDetails('express-shipping', false, who);
 
-  const status = await context.with(withFlagBaggage([engine, express]), async () => {
+  const status = await context.with(featureFlagBaggage([engine, express]), async () => {
     const headers: Record<string, string> = { 'content-type': 'application/json' };
     propagation.inject(context.active(), headers);
-    const response = await fetch(PRICING_URL, { method: 'POST', headers, body: JSON.stringify(request) });
+    const response = await fetch(PRICING_URL, { method: 'POST', headers, body: JSON.stringify(request), signal: AbortSignal.timeout(PRICING_TIMEOUT_MS) });
 
     return { response, body: await response.text() };
   });

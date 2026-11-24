@@ -12,7 +12,7 @@ const setup = () => {
   const ask = (group = 'beta', targetingKey = 'user-1') =>
     provider.resolveBooleanEvaluation('express-shipping', true, { targetingKey, group }, console);
 
-  return { getFeatureFlag, ask };
+  return { getFeatureFlag, provider, ask };
 };
 
 it('asks PostHog once per flag, user and group, and caches off as well as on', async () => {
@@ -35,6 +35,16 @@ it('picks up a kill switch once the TTL passes', async () => {
   expect((await ask()).value).toBe(true);
   vi.advanceTimersByTime(FLAG_TTL_MS + 1);
   expect((await ask()).value).toBe(false);
+});
+
+it('gives a user a multivariate flag does not match the caller\'s default, not false', async () => {
+  const { getFeatureFlag, provider } = setup();
+  getFeatureFlag.mockResolvedValue(false);
+  const ask = () => provider.resolveStringEvaluation('pricing-engine', 'control', { targetingKey: 'user-1', group: 'everyone' }, console);
+
+  expect(await ask()).toMatchObject({ value: 'control', variant: 'control', reason: 'default' });
+  expect(await ask()).toMatchObject({ value: 'control', variant: 'control', reason: 'cached' });
+  expect(getFeatureFlag).toHaveBeenCalledTimes(1);
 });
 
 it('does not cache a missing answer', async () => {

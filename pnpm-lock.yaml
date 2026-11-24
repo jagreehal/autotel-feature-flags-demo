@@ -12,8 +12,8 @@ importers:
         specifier: 1.23.0
         version: 1.23.0(@openfeature/core@1.12.0)
       autotel:
-        specifier: 9.5.2
-        version: 9.5.2(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)
+        specifier: 9.7.0
+        version: 9.7.0(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)
       keyv:
         specifier: 6.1.0
         version: 6.1.0
@@ -28,8 +28,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(eslint@10.15.0)(oxlint@1.94.0)(tsrs@7.1.0-beta.tsrs4)
       autotel-devtools:
-        specifier: 31.10.3
-        version: 31.10.3(@internationalized/date@3.12.4)(autotel@9.5.2(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1))
+        specifier: 31.11.3
+        version: 31.11.3(@internationalized/date@3.12.4)(autotel@9.7.0(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1))
       oxlint:
         specifier: 1.94.0
         version: 1.94.0
@@ -894,17 +894,17 @@ packages:
   autotel-agents@0.9.0:
     resolution: {integrity: sha512-foJi3CSY1BgMNvJupmdJ9iSPvq+Q+NKUJ7LshyWYLPFKlxpr0UDDhYTpo4dH+IMClnPuMDREXfr57aNfi/hh9g==}
 
-  autotel-devtools@31.10.3:
-    resolution: {integrity: sha512-2NWhtZQyCe1NF4vIw5GT0+PiUWWGZYC7YYbKEK+9XktgZ1upY9soxJ48sq1rGdI5b+Z6MlMnOzO1KpxHpoCo+w==}
+  autotel-devtools@31.11.3:
+    resolution: {integrity: sha512-Qrp0OTi0O0q1S4i96EtZkRmM7XVfsVCgqCfe2IlsamkX7GzAQ/fAjM9blTXaRpndw8Cm9Fgsf96BiWk6IgzHpQ==}
     hasBin: true
     peerDependencies:
-      autotel: 9.5.2
+      autotel: 9.7.0
     peerDependenciesMeta:
       autotel:
         optional: true
 
-  autotel@9.5.2:
-    resolution: {integrity: sha512-7pjcYXKo92iPrsABSJYjvreLLT83E8tljE8s3ndBZS505txhls/YtSY0QcnAoL8SUDxN53doYINAWuVJoK2bzQ==}
+  autotel@9.7.0:
+    resolution: {integrity: sha512-kkUklb63m68EF2nQjchtvk6XAaHik8LdMlgljf5/PBsRO2y50jzGDqRz0rSkDrKNEy7vs81DhnfRhaFHoZr/FA==}
     peerDependencies:
       '@openfeature/server-sdk': ^1.17.0
       '@opentelemetry/auto-instrumentations-node': ^0.83.0
@@ -2413,7 +2413,7 @@ snapshots:
 
   autotel-agents@0.9.0: {}
 
-  autotel-devtools@31.10.3(@internationalized/date@3.12.4)(autotel@9.5.2(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)):
+  autotel-devtools@31.11.3(@internationalized/date@3.12.4)(autotel@9.7.0(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)):
     dependencies:
       '@grpc/grpc-js': 1.14.7
       '@lucide/svelte': 1.77.0(svelte@5.59.1)
@@ -2427,7 +2427,7 @@ snapshots:
       tailwind-merge: 3.7.1
       ws: 8.23.0
     optionalDependencies:
-      autotel: 9.5.2(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)
+      autotel: 9.7.0(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1)
     transitivePeerDependencies:
       - '@internationalized/date'
       - '@sveltejs/kit'
@@ -2435,7 +2435,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  autotel@9.5.2(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1):
+  autotel@9.7.0(@openfeature/server-sdk@1.23.0(@openfeature/core@1.12.0))(@opentelemetry/exporter-logs-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-logs-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-metrics-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-grpc@0.301.2(@opentelemetry/api@1.10.0))(@opentelemetry/exporter-trace-otlp-proto@0.301.2(@opentelemetry/api@1.10.0))(yaml@2.9.1):
     dependencies:
       '@opentelemetry/api': 1.10.0
       '@opentelemetry/context-async-hooks': 3.1.1(@opentelemetry/api@1.10.0)
