@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "flags": {
+    "pricing-engine": {
+      "variants": {
+        "control": "control",
+        "v2": "v2"
+      },
+      "default": "control",
+      "rules": [
+        {
+          "group": "internal",
+          "variant": "v2"
+        },
+        {
+          "group": "beta",
+          "rollout": {
+            "v2": 25
+          }
+        }
+      ]
+    },
+    "express-shipping": {
+      "variants": {
+        "on": true,
+        "off": false
+      },
+      "default": "off",
+      "rules": [
+        {
+          "rollout": {
+            "on": 50
+          }
+        }
+      ]
+    }
+  }
+}

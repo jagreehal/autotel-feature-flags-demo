@@ -1,0 +1,35 @@
+{
+  "name": "autotel-feature-flags-demo",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "devtools": "autotel-devtools",
+    "start": "tsx --env-file-if-exists=.env src/start.ts",
+    "traffic": "tsx src/traffic.ts",
+    "rollout": "tsx src/rollout.ts",
+    "repro": "tsx src/repro.ts",
+    "test": "vitest run",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@openfeature/server-sdk": "1.23.0",
+    "autotel": "9.5.2",
+    "keyv": "6.1.0",
+    "posthog-node": "6.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "auto-anti-slop": "0.1.0",
+    "autotel-devtools": "31.10.3",
+    "oxlint": "1.94.0",
+    "tsrs": "7.1.0-beta.tsrs4",
+    "tsx": "4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "5.1.1"
+  }
+}

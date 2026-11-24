@@ -1,0 +1,156 @@
+{
+  "src/checkout-api.ts": {
+    "anti-slop/no-known-value-widening": {
+      "count": 1
+    },
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 2
+    },
+    "typescript/no-misused-promises": {
+      "count": 2
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 2
+    }
+  },
+  "src/file-provider.ts": {
+    "anti-slop/no-known-value-widening": {
+      "count": 5
+    },
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 3
+    },
+    "complexity": {
+      "count": 1
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    },
+    "typescript/no-unnecessary-condition": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 3
+    },
+    "typescript/require-await": {
+      "count": 4
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 3
+    }
+  },
+  "src/flag-baggage.ts": {
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 2
+    },
+    "typescript/explicit-module-boundary-types": {
+      "count": 1
+    },
+    "typescript/no-unnecessary-condition": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 2
+    },
+    "typescript/require-await": {
+      "count": 4
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 1
+    },
+    "unicorn/consistent-function-scoping": {
+      "count": 1
+    }
+  },
+  "src/posthog-provider.test.ts": {
+    "typescript/no-deprecated": {
+      "count": 1
+    }
+  },
+  "src/posthog-provider.ts": {
+    "anti-slop/no-runtime-typeof": {
+      "count": 1
+    },
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 1
+    },
+    "typescript/no-base-to-string": {
+      "count": 1
+    },
+    "typescript/no-deprecated": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 1
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 1
+    }
+  },
+  "src/pricing-service.ts": {
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 2
+    },
+    "typescript/no-misused-promises": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 2
+    }
+  },
+  "src/pricing.ts": {
+    "anti-slop/no-known-value-widening": {
+      "count": 1
+    },
+    "typescript/no-unnecessary-condition": {
+      "count": 1
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 1
+    }
+  },
+  "src/repro.ts": {
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 6
+    },
+    "no-empty": {
+      "count": 1
+    },
+    "typescript/consistent-return": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 6
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 2
+    }
+  },
+  "src/rollout.ts": {
+    "anti-slop/require-safety-comment-for-type-assertion": {
+      "count": 1
+    },
+    "typescript/no-non-null-assertion": {
+      "count": 1
+    },
+    "typescript/no-unsafe-type-assertion": {
+      "count": 1
+    },
+    "typescript/strict-boolean-expressions": {
+      "count": 1
+    }
+  },
+  "src/traffic.ts": {
+    "typescript/use-unknown-in-catch-callback-variable": {
+      "count": 1
+    }
+  },
+  "src/users.ts": {
+    "anti-slop/no-known-value-widening": {
+      "count": 1
+    },
+    "no-nested-ternary": {
+      "count": 1
+    }
+  }
+}
