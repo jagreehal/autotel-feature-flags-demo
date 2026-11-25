@@ -18,8 +18,8 @@ export interface Quote {
 }
 
 /** Prices are GBP pence; quotes are in the basket's minor units. */
-const RATES: Record<Currency, number> = { GBP: 1, EUR: 1.17 };
-const DISCOUNTS: Record<string, number> = { SAVE10: 1000 };
+export const RATES: Record<Currency, number> = { GBP: 1, EUR: 1.17 };
+export const DISCOUNTS: Record<string, number> = { SAVE10: 1000 };
 
 export class QuoteError extends Error {
   override name = 'QuoteError';

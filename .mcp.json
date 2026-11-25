@@ -3,7 +3,7 @@
     "autotel": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "autotel-mcp@1.0.0", "--backend", "devtools"]
+      "args": ["-y", "autotel-mcp@1.1.2", "--backend", "devtools"]
     }
   }
 }

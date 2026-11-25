@@ -18,14 +18,14 @@
   },
   "dependencies": {
     "@openfeature/server-sdk": "1.23.0",
-    "autotel": "9.5.2",
+    "autotel": "9.7.0",
     "keyv": "6.1.0",
     "posthog-node": "6.0.5"
   },
   "devDependencies": {
     "@types/node": "26.6.6",
     "auto-anti-slop": "0.1.0",
-    "autotel-devtools": "31.10.3",
+    "autotel-devtools": "31.11.3",
     "oxlint": "1.94.0",
     "tsrs": "7.1.0-beta.tsrs4",
     "tsx": "4.23.15",

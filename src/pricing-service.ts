@@ -6,14 +6,14 @@
 import { createServer } from 'node:http';
 import { OpenFeature } from '@openfeature/server-sdk';
 import { context, propagation, trace } from 'autotel';
+import { featureFlagBaggageProvider } from 'autotel/feature-flags';
 import { startTelemetry } from './telemetry.ts';
-import { baggageProvider } from './flag-baggage.ts';
 import { quote, QuoteError } from './pricing.ts';
 import type { Engine, QuoteRequest } from './pricing.ts';
 
 startTelemetry('pricing');
 
-await OpenFeature.setProviderAndWait(baggageProvider());
+await OpenFeature.setProviderAndWait(featureFlagBaggageProvider());
 
 const flags = OpenFeature.getClient();
 
