@@ -1,6 +1,6 @@
 /**
  * The edge. Looks up who the user is, evaluates their flags once, and carries
- * the answers to pricing in baggage. autotel's OpenFeature hook records every
+ * the one pricing reads in baggage. autotel's OpenFeature hook records every
  * evaluation on the span that branched on it: no code at the call sites.
  */
 import { createServer } from 'node:http';
@@ -46,7 +46,8 @@ async function checkout(ctx: TraceContext, userId: string, request: QuoteRequest
   const engine = await flags.getStringDetails('pricing-engine', 'control', who);
   const express = await flags.getBooleanDetails('express-shipping', false, who);
 
-  const status = await context.with(featureFlagBaggage([engine, express]), async () => {
+  // Pricing reads pricing-engine, so that is the flag it gets.
+  const status = await context.with(featureFlagBaggage([engine]), async () => {
     const headers: Record<string, string> = { 'content-type': 'application/json' };
     propagation.inject(context.active(), headers);
     const response = await fetch(PRICING_URL, { method: 'POST', headers, body: JSON.stringify(request), signal: AbortSignal.timeout(PRICING_TIMEOUT_MS) });

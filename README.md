@@ -34,7 +34,7 @@ Jump to: [run it](#run-it) · [find a failure](#1-what-do-the-failures-have-in-c
 flowchart LR
   traffic["pnpm traffic<br/>200 simulated users"] -->|"POST /checkout"| api["checkout-api<br/>evaluates the flags"]
   source[("flags.json<br/>or PostHog")] --> api
-  api -->|"POST /quote<br/>flag answers in baggage"| pricing["pricing<br/>reads the answers"]
+  api -->|"POST /quote<br/>pricing-engine in baggage"| pricing["pricing<br/>reads the answer"]
   api -.->|OTLP| devtools["autotel-devtools<br/>:4318"]
   pricing -.->|OTLP| devtools
   mcp["autotel-mcp<br/>(Claude)"] -->|queries| devtools
@@ -207,7 +207,7 @@ sequenceDiagram
   A->>F: pricing-engine? express-shipping?
   F-->>A: value, variant, reason, version
   Note over A: autotel's OpenFeature hook<br/>records each answer on the span
-  A->>P: POST /quote + traceparent + baggage (answers)
+  A->>P: POST /quote + traceparent + baggage (pricing-engine)
   Note over P: Same OpenFeature call, but the<br/>provider only reads baggage
   P->>P: quote with control or v2
   P-->>A: total, or 422 when the guard refuses it
@@ -221,7 +221,7 @@ Each choice removes a specific way of getting lost:
 | What it does | Without it |
 |---|---|
 | Evaluate once, at the edge | If a rollout changes between two lookups, one request sees `v2` in one service and `control` in the next |
-| Carry the answers in baggage | Every service needs the flag provider, and its own chance to disagree |
+| Carry the answer pricing needs in baggage | Every service needs the flag provider, and its own chance to disagree |
 | Read flags through OpenFeature | Instrumentation at every call site, and a rewrite to change vendor |
 | Record the version with the answer | A rollout edit leaves no mark: same commit, different behaviour |
 | Record the request and the variants | A replay runs under today's flags, which have usually moved since |
@@ -238,9 +238,10 @@ it. Why the user got it is the edge's event on the same trace: `split` from
 
 **One answer per flag is not one snapshot of all flags.** `checkout-api` evaluates
 its two flags one after the other, so a rollout saved in between can give one
-from version 1 and one from version 2. Every service the baggage reaches still agrees on both (one it does not reach uses
-its own fallback, recorded with reason `error`), and
-each event records its version, so you can see it happened. If your flags must
+from version 1 and one from version 2. Every service that
+reads a flag from baggage agrees with the edge about it (one the baggage does not
+reach uses its own fallback, recorded with reason `error`). Each event records its
+version, so you can see it happened. If your flags must
 change together, make them one flag or evaluate them in a batch your provider
 answers from one revision.
 
@@ -270,7 +271,7 @@ variant: raising 25% to 50% adds users without moving anyone already in.
 | File | What it shows |
 |---|---|
 | [`src/telemetry.ts`](src/telemetry.ts) | `init()` with the git sha as `service.version`. autotel finds OpenFeature and registers its hook, so every evaluation is recorded with no code at the call sites |
-| [`src/checkout-api.ts`](src/checkout-api.ts) | Evaluates flags once for the user and their group, records the request, carries the answers to pricing with autotel's `featureFlagBaggage()` |
+| [`src/checkout-api.ts`](src/checkout-api.ts) | Evaluates flags once for the user and their group, records the request, carries the one pricing reads with autotel's `featureFlagBaggage()` |
 | [`src/pricing-service.ts`](src/pricing-service.ts) | Reads `pricing-engine` through OpenFeature like any service would, from `featureFlagBaggageProvider()` |
 | [`src/file-provider.ts`](src/file-provider.ts) | The stand-in for a flag vendor: group rules, sticky percentage rollouts, a kill switch, a version per edit. An invalid edit is refused and the last good flags stay live |
 | [`src/posthog-provider.ts`](src/posthog-provider.ts) | The same seam answered by PostHog, cached in Keyv |
@@ -348,7 +349,7 @@ events), see
 1. `init()` from autotel, with `version` set to the commit.
 2. Read flags through OpenFeature, with your vendor's provider. That is the
    whole instrumentation.
-3. Evaluate once per request at the edge and carry the answers downstream.
+3. Evaluate once per request at the edge and carry each service the flags it reads.
 4. Record the request inputs a replay needs, and nothing personal.
 5. Make sure your provider reports a version (`flagMetadata.version`): without
    it a rollout change is invisible.
